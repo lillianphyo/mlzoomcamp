@@ -1,0 +1,29 @@
+import csv
+import json
+
+# Define the path to your CSV file
+csv_file_path = 'wl.csv'
+
+# Initialize an empty list to store the dictionaries
+dict_list = []
+
+# Read the CSV file and convert each row to a dictionary
+with open(csv_file_path, 'r') as csvfile:
+    reader = csv.DictReader(csvfile)  # Automatically uses the first row as keys
+    for row in reader:
+        dict_list.append(row)  # Append each row as a dictionary
+
+# Print the list of dictionaries
+print(dict_list)
+
+# If you specifically want to access the payload and convert it to JSON
+for item in dict_list:
+    # Assuming payload is a valid JSON string in your CSV
+    payload_str = item.get('payload')
+    if payload_str:
+        try:
+            payload_json = json.loads(payload_str)  # Convert to JSON
+            print(payload_json)
+        except json.JSONDecodeError:
+            print("Failed to decode JSON from payload.")
+
